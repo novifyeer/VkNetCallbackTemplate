@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using VkNet.Model;
+using VkNet.Utils;
 
 namespace VkBot.Controllers
 {
@@ -9,6 +10,9 @@ namespace VkBot.Controllers
     [ApiController]
     public class CallbackController : ControllerBase
     {
+        /// <summary>
+        /// Конфигурация приложения
+        /// </summary>
         private readonly IConfiguration _configuration;
 
         public CallbackController(IConfiguration configuration)
@@ -24,18 +28,20 @@ namespace VkBot.Controllers
             {
                 // Ключ-подтверждение
                 case "confirmation":
-
-                    return new OkObjectResult(_configuration["Config:Confirmation"]);
-
+                {
+                    return Ok(_configuration["Config:Confirmation"]);
+                }
+                
                 // Новое сообщение
                 case "message_new":
+                {
                     // Десериализация
-                    var msg = JsonConvert.DeserializeObject<Message>(updates.Object.ToString());
-                    
+                    var msg = Message.FromJson(new VkResponse(updates.Object.ToString()));
+                }
                     break;
             }
 
-            return new OkObjectResult("ok");
+            return Ok("ok");
         }
     }
 }
