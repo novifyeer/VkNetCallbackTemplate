@@ -31,14 +31,14 @@ namespace VkBot.Controllers
                 {
                     return Ok(_configuration["Config:Confirmation"]);
                 }
-                
+
                 // Новое сообщение
                 case "message_new":
                 {
                     // Десериализация
                     var msg = Message.FromJson(new VkResponse(updates.Object.ToString()));
-                }
                     break;
+                }
             }
 
             return Ok("ok");
