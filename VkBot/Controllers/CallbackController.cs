@@ -36,7 +36,7 @@ namespace VkBot.Controllers
                 case "message_new":
                 {
                     // Десериализация
-                    var msg = Message.FromJson(new VkResponse(updates.Object.ToString()));
+                    var msg = Message.FromJson(new VkResponse(updates.Object));
                     break;
                 }
             }
